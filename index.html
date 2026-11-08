@@ -77,7 +77,15 @@ function initHome(){setChrome();$('#classbar').innerHTML=classes();$('#cards').i
 function initModule(id){setChrome();const m=modules.find(x=>x.id===id);if(!m)return;$('#module-title').textContent=m.title;$('#module-icon').textContent=m.icon;$('#module-desc').textContent=m.desc;document.querySelector('.module-hero').style.setProperty('--module-image',`url(../assets/${m.id}.webp)`);$('#topic-list').innerHTML=m.topics.map((t,i)=>`<li><strong>${i+5} клас.</strong> ${t} <span class="tag">Тема для наповнення</span></li>`).join('');$('#class-name').textContent=selected;$('#module-note').textContent=id==='detective'?'Сценарії 25 справ підготовлено окремо. Тут передбачено місце для інтерактивної реалізації, яку додаватимемо поступово.':'Це готовий розділ платформи з навігацією та тематичним планом. Навчальні вправи додаватимемо окремими файлами.'}
 
 /* Каталог LearningApps: для додавання гри допишіть об’єкт у масив. */
-const LA_GAMES=[{id:'56464092',grade:5,topic:'Лексикологія',title:'Лексичний детектив: знайди мовну пару',description:'Інтерактивна вправа «Знайди пару» для повторення лексикології.'}];
+const LA_GAMES=[
+{id:'56464092',grade:5,topic:'Лексикологія',title:'Лексичний детектив: знайди мовну пару',description:'Знайди відповідні мовні пари.'},
+{id:'56465942',grade:5,topic:'Лексикологія',title:'Мовні скарбниці: розподіли слова',description:'Розподіли синоніми, антоніми й омоніми.'},
+{id:'56465705',grade:6,topic:'Фразеологія',title:'Фразеологічний детектив: розкрий таємницю вислову',description:'Досліджуй значення фразеологізмів.'},
+{id:'56466137',grade:6,topic:'Будова слова',title:'Будова слова: морфемний конструктор',description:'Повтори будову слова та морфеми.'},
+{id:'56466394',grade:7,topic:'Дієслово',title:'Дієслівний лабіринт: три брами часу',description:'Повтори часи дієслова.'},
+{id:'56467513',grade:8,topic:'Синтаксис',title:'Синтаксичний мільйонер: шлях до мовного скарбу',description:'Пройди 12 синтаксичних випробувань.'},
+{id:'56467809',grade:9,topic:'Синтаксис',title:'Складне речення: синтаксичний лабіринт',description:'Знайди пари складних речень та їхніх характеристик.'}
+];
 let laGrade=5,laTopic='Усі теми';
 function laDraw(){const grades=[5,6,7,8,9];$('#la-classes').innerHTML=grades.map(g=>`<button type="button" class="la-filter" data-la-grade="${g}" aria-pressed="${g===laGrade}">${g} клас</button>`).join('');const topics=['Усі теми',...new Set(LA_GAMES.filter(x=>x.grade===laGrade).map(x=>x.topic))];if(!topics.includes(laTopic))laTopic='Усі теми';$('#la-topics').innerHTML=topics.map(t=>`<button type="button" class="la-filter" data-la-topic="${t}" aria-pressed="${t===laTopic}">${t}</button>`).join('');const games=LA_GAMES.filter(x=>x.grade===laGrade&&(laTopic==='Усі теми'||x.topic===laTopic));$('#la-list').innerHTML=games.length?games.map(x=>`<article class="la-card"><span class="la-tag">${x.grade} клас · ${x.topic}</span><h2>${x.title}</h2><p>${x.description}</p><button type="button" class="btn" data-la-open="${x.id}">▶ Розпочати вправу</button></article>`).join(''):'<div class="la-empty">Для цього класу поки немає вправ. Незабаром каталог поповниться.</div>'}
 function laClose(){$('#la-frame').removeAttribute('src');$('#la-player').hidden=true;$('#la-list').hidden=false}
